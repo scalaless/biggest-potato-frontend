@@ -1,0 +1,58 @@
+[
+    {
+      "id": 0,
+      "img": "https://www.kartoshka.com/media/images/1600kh1200_KK.height-440.jpg",
+      "price": 351,
+      "title": "Motovate",
+      "types": [0,1],
+      "sizes": ["бэби", "медиум", "босс"]
+    },
+    {
+      "id": 1,
+      "img": "https://www.kartoshka.com/media/images/1600kh1200_KK_s_ukropom_i_rastitelnym_maslom.height-440.jpg",
+      "price": 580,
+      "title": "Eclipto",
+      "types": [0],
+      "sizes": ["бэби", "медиум", "босс"]
+    },
+    {
+      "id": 3,
+      "img": "https://www.kartoshka.com/media/images/GCh_Korn_belyi.height-440.jpg",
+      "price": 461,
+      "title": "Ewaves",
+      "types": [0,1],
+      "sizes": ["бэби", "медиум", "босс"]
+    },
+    {
+      "id": 4,
+      "img": "https://www.kartoshka.com/media/images/GCh_krevetki_belyi.height-440.jpg",
+      "price": 494,
+      "title": "Exostream",
+      "types": [1],
+      "sizes": ["бэби", "босс"]
+    },
+    {
+      "id": 5,
+      "img": "https://www.kartoshka.com/media/images/GCh_Tsyplenok_belyi.height-440.jpg",
+      "price": 452,
+      "title": "Earthmark",
+      "types": [0,1],
+      "sizes": ["бэби", "медиум", "босс"]
+    },
+    {
+      "id": 5,
+      "img": "https://www.kartoshka.com/media/images/1600kh1200_KK_so_slivochnym_syrom.height-440.jpg",
+      "price": 452,
+      "title": "Rytnufs",
+      "types": [0,1],
+      "sizes": ["босс"]
+    },
+    {
+      "id": 2,
+      "img": "https://www.kartoshka.com/media/images/1600kh1200_mesh_malyi_1.height-440.jpg",
+      "price": 507,
+      "title": "Hydrocom",
+      "types": [0],
+      "sizes": ["бэби", "медиум", "босс"]
+    }
+  ]
