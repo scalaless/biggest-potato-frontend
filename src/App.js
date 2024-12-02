@@ -1,11 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './scss/app.scss';
 import Header from './Components/Header';
 import Categories from './Components/Categories';
 import PotatoBlock from './Components/PotatoBlock';
 import potatoList from "./assets/potatoList.json"
+import axios from 'axios';
 
 function App() {
+  const [potatoes, setPotatoes] = useState([])
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/potatoes/list")
+    // axios.get("http://95.142.35.105:8080/potatoes/list")
+      .then((response) => {
+        console.log(response.headers)
+        setPotatoes(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the potatoes!", error);
+      });
+  }, []);
+
+  console.log(potatoes, 'potatoes')
+
+
   return (
     <body>
       <div className="wrapper">
