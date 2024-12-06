@@ -10,8 +10,8 @@ function App() {
   const [potatoes, setPotatoes] = useState([])
 
   useEffect(() => {
-    // axios.get("http://localhost:8080/potatoes/list")
-    axios.get("http://95.142.35.105:8080/potatoes/list")
+    // axios.get("http://localhost:548700/potatoes/list")
+    axios.get("http://95.142.35.105:54870/potatoes/list")
       .then((response) => {
         setPotatoes(response.data);  
         console.log(potatoes, 'potatoes')
