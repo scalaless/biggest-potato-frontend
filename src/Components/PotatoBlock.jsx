@@ -1,45 +1,47 @@
 import { useState } from 'react';
 
 const PotatoBlock = ({ title, price, img, sizes, types }) => {
-    const [activeType, setActiveType] = useState(0)
-    
-    const [currentSize, setCurrentSize] = useState(0)
+    const [activeType, setActiveType] = useState(0);
+
+    const [currentSize, setCurrentSize] = useState(0);
 
     const [potatoCount, setPotatoCount] = useState(0);
 
-    const onClockAdd =() => {
-        setPotatoCount(potatoCount + 1)
-    }
-
-    const potatoTypes = ["в мундире", "рядовой"]
+    const onClockAdd = () => {
+        setPotatoCount(potatoCount + 1);
+    };
 
     return (
         <div className="pizza-block">
-            <img
-                className="pizza-block__image"
-                src={img}
-                alt="Pizza"
-            />
+            <img className="pizza-block__image" src={img} alt="Pizza" />
             <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    {
-                        types.map((v, i)=>(
-                            <li onClick={()=>setActiveType(i)} className={activeType===i? "active" : ""} key={i}>{potatoTypes[v]}</li>
-                        ))
-                    }
+                    {types.map((v, i) => (
+                        <li
+                            onClick={() => setActiveType(i)}
+                            className={activeType === i ? 'active' : ''}
+                            key={v.id}>
+                            {v.name}
+                        </li>
+                    ))}
                 </ul>
                 <ul>
-                    {
-                        sizes.map((v,i)=>(
-                            <li onClick={()=>setCurrentSize(i)} className={currentSize === i ? "active" : ""} key={i}>{v}</li>
-                        ))
-                    }
+                    {sizes.map((v, i) => (
+                        <li
+                            onClick={() => setCurrentSize(i)}
+                            className={currentSize === i ? 'active' : ''}
+                            key={v.id}>
+                            {v.name}
+                        </li>
+                    ))}
                 </ul>
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">от {price} ₽</div>
-                <button onClick={onClockAdd} className="button button--outline button--add">
+                <button
+                    onClick={onClockAdd}
+                    className="button button--outline button--add">
                     <svg
                         width="12"
                         height="12"
