@@ -15,7 +15,6 @@ body {
   border-radius: 10px;
   max-width: 1400px;
 }
-
 .content {
   padding: 40px 0;
 
@@ -30,6 +29,7 @@ body {
   }
 
   &__top {
+    margin: 5ex;
     display: flex;
     align-items: center;
     justify-content: space-between;

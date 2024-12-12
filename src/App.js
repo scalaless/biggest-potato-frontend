@@ -1,46 +1,23 @@
-import { useEffect, useState } from 'react';
 import './scss/app.scss';
 import Header from './Components/Header';
-import Categories from './Components/Categories';
-import PotatoBlock from './Components/PotatoBlock';
-import potatoList from "./assets/potatoList.json"
-import axios from 'axios';
-import SortPlease from './Components/SortPlease';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
+import EmptyCart from './pages/EmptyCart';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
-  const [potatoes, setPotatoes] = useState([])
-
-  useEffect(() => {
-    // axios.get("http://localhost:548700/potatoes/list")
-    axios.get("http://95.142.35.105:54870/potatoes/list")
-      .then((response) => {
-        setPotatoes(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the potatoes!", error);
-      });
-  }, []);
+  const pathName = window.location.pathname;
 
   return (
     <div>
       <div className="wrapper">
         <Header />
-        <div className="content">
-          <div className="container">
-            <div className="content__top">
-              <Categories />
-              <SortPlease />
-            </div>
-            <h2 className="content__title">Вся картошка</h2>
-            <div className="content__items">
-              {
-                potatoes.map((potato)=>(
-                  <PotatoBlock key={potato.id} {...potato} />
-                ))
-              }
-            </div>
-          </div>
-        </div>
+        <Routes>
+          <Route path="" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+
+          <Route path="*" element={<EmptyCart />} />
+        </Routes>
       </div>
     </div>
   );
