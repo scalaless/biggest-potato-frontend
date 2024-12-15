@@ -23,13 +23,14 @@ const Home = () => {
         .catch((error) => {
           console.error("There was an error fetching the potatoes!", error);
         });
+        window.scrollTo(0,0)
     }, []);
 
     return (
         <>
             <div className="content__top">
-                    <Categories />
-                    <SortPlease />
+                <Categories />
+                <SortPlease />
             </div>  
             <div className="content">
                 <div className="container">

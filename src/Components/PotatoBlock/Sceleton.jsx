@@ -3,7 +3,7 @@ import ContentLoader from 'react-content-loader';
 
 const Sceleton = (props) => (
     <ContentLoader
-        className="pizza-block"
+        className="potato-block"
         speed={2}
         width={280}
         height={450}
