@@ -11,37 +11,41 @@ import Sceleton from '../Components/PotatoBlock/Sceleton';
 const Home = () => {
     const [isLoading, setIsCloading] = useState(true)
     const [potatoes, setPotatoes] = useState([])
-  
+
+    const [currentCategory, setCurrentCategory] = useState(0)
+    const [selectedSort, setSelectedSort] = useState(0)
+
     useEffect(() => {
-      // axios.get("http://localhost:548700/potatoes/list")
-      axios.get("http://95.142.35.105:54870/potatoes/list")
-        .then((response) => {
-          setPotatoes(response.data);
-          console.log(response.data)
-          setIsCloading(false)
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the potatoes!", error);
-        });
-        window.scrollTo(0,0)
-    }, []);
+        setIsCloading(true)
+        // axios.get("http://localhost:548700/potatoes/list")
+        axios.get("http://95.142.35.105:54870/potatoes/list")
+            .then((response) => {
+                setPotatoes(response.data);
+                console.log(response.data)
+                setIsCloading(false)
+            })
+            .catch((error) => {
+                console.error("There was an error fetching the potatoes!", error);
+            });
+        window.scrollTo(0, 0)
+    }, [currentCategory, selectedSort]);
 
     return (
         <>
             <div className="content__top">
-                <Categories />
-                <SortPlease />
-            </div>  
+                <Categories value={currentCategory} changeCat={(i) => { setCurrentCategory(i) }} />
+                <SortPlease value={selectedSort} onChangeSort={(i) => { setSelectedSort(i) }} />
+            </div>
             <div className="content">
                 <div className="container">
-                    
+
                     <h2 className="content__title">Вся картошка</h2>
                     <div className="content__items">
-                    {
-                        isLoading ? [...new Array(12)].map((_, i)=> <Sceleton key={i}/>)  : potatoes.map((potato)=> (
-                        <PotatoBlock key={potato.id} {...potato} />
-                        ))
-                    }
+                        {
+                            isLoading ? [...new Array(12)].map((_, i) => <Sceleton key={i} />) : potatoes.map((potato) => (
+                                <PotatoBlock key={potato.id} {...potato} />
+                            ))
+                        }
                     </div>
                 </div>
             </div>

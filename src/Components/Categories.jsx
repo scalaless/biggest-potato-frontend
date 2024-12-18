@@ -1,11 +1,7 @@
 import {useState} from 'react'
 
-function Categories() {    
-    const [currentCategory, setCurrentCategory] = useState(0)
-
-    const onCategoryChanged = (index) => {
-        setCurrentCategory(index)
-    }
+function Categories({value, changeCat}) {   
+  console.log(value)
 
     const [categoriesList, setCategoriesList] = useState([
         "Все",
@@ -20,7 +16,7 @@ function Categories() {
         <ul>
             {
                 categoriesList.map((v, i) => (
-                    <li key={i} onClick={()=>onCategoryChanged(i)} className={currentCategory === i ? "active" : ""}>{v}</li>
+                    <li key={i} onClick={()=>changeCat(i)} className={value === i ? "active" : ""}>{v}</li>
                 ))
             }
         </ul>

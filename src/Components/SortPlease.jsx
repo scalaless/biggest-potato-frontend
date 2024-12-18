@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 
-const SortPlease = ()=> {
+const SortPlease = ({ value, onChangeSort })=> {
     const sortNameList = ["популярности", "цене", "алфавиту"]
     const [isOpen, setIsOpen] = useState(false)
-    const [selectedSort, setSelectedSort] = useState(0)
     const [sortList, setSortList] = useState([])
 
     return (
@@ -21,7 +20,7 @@ const SortPlease = ()=> {
             />
           </svg>
           <b>Сортировка по:</b>
-          <span onClick={()=>setIsOpen(!isOpen)}>{sortNameList[selectedSort]}</span>
+          <span onClick={()=>setIsOpen(!isOpen)}>{sortNameList[value]}</span>
         </div>
         {
             isOpen && (
@@ -31,7 +30,7 @@ const SortPlease = ()=> {
                     <li>цене</li>
                     <li>алфавиту</li> */}
                     {sortNameList.map((x,i)=>
-                        <li onClick={()=>setSelectedSort(i)} className={selectedSort === i ? "active" : ""} key={i}>{x}</li>
+                        <li onClick={()=>onChangeSort(i)} className={value === i ? "active" : ""} key={i}>{x}</li>
                     )}
                 </ul>
                 </div>                
