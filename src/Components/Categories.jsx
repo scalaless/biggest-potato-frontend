@@ -1,27 +1,32 @@
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios';
 
-function Categories({value, changeCat}) {   
-  console.log(value)
+function Categories({ value, changeCat }) {
+  const [categoriesList, setCategoriesList] = useState([])
 
-    const [categoriesList, setCategoriesList] = useState([
-        "Все",
-        "Мясные",
-        "Вегетарианская",
-        "Гриль",
-        "Острые",
-        "Закрытые",
-    ])
-    return (
-      <div className="categories">
-        <ul>
-            {
-                categoriesList.map((v, i) => (
-                    <li key={i} onClick={()=>changeCat(i)} className={value === i ? "active" : ""}>{v}</li>
-                ))
-            }
-        </ul>
-      </div>
-    );
-  }
-  
+  useEffect(() => {
+    // axios.get("http://localhost:548700/potatoes/list")
+    axios.get("http://95.142.35.105:54870/categories/list")
+      .then((response) => {
+        const defaultCategory = { id: 0, title: "Все категории" };
+        setCategoriesList([defaultCategory, ...response.data]);
+      })
+      .catch((error) => {
+        console.error("cats bad!", error);
+      });
+  }, []);
+
+  return (
+    <div className="categories">
+      <ul>
+        {
+          categoriesList.map((v) => (
+            <li key={v.id} onClick={() => changeCat(v)} className={value.id === v.id ? "active" : ""}>{v.title}</li>
+          ))
+        }
+      </ul>
+    </div>
+  );
+}
+
 export default Categories  

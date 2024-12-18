@@ -1,8 +1,6 @@
 import React from 'react';
 import styles from "./EmptyCartBlock.module.scss"
 
-console.log(styles)
-
 export const EmptyCartBlock = () => {
     return (
         <>

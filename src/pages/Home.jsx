@@ -12,16 +12,21 @@ const Home = () => {
     const [isLoading, setIsCloading] = useState(true)
     const [potatoes, setPotatoes] = useState([])
 
-    const [currentCategory, setCurrentCategory] = useState(0)
-    const [selectedSort, setSelectedSort] = useState(0)
+    const [currentCategory, setCurrentCategory] = useState({ id: 0, title: "Все категории" })
+    const [selectedSort, setSelectedSort] = useState({ name: "популярности", v: "Rating" })
 
     useEffect(() => {
         setIsCloading(true)
+
+        const params = {}
+        if (currentCategory.id !== 0) params.category = currentCategory.id
+        if (selectedSort.id !== 0) params.sort = selectedSort.v
         // axios.get("http://localhost:548700/potatoes/list")
-        axios.get("http://95.142.35.105:54870/potatoes/list")
+        console.log(params, "!!!!!PARAMS")
+        axios.get("http://95.142.35.105:54870/potatoes/list", {params})
             .then((response) => {
                 setPotatoes(response.data);
-                console.log(response.data)
+                console.log(response.data);
                 setIsCloading(false)
             })
             .catch((error) => {
