@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from '../assets/img/big-potato-logo.svg';
 import { Link } from 'react-router-dom';
+import SearchPotato from './SearchPotato';
 
-function Header() {
+function Header({searchPotatoValue, setSearchPotatoValue}) {
     return (
         <div className="header">
             <div className="container">
@@ -15,6 +16,7 @@ function Header() {
                         </div>
                     </div>
                 </Link>
+                <SearchPotato searchPotatoValue={searchPotatoValue} setSearchPotatoValue={setSearchPotatoValue}/>
                 <div className="header__cart">
                     <Link to="/cart" className="button button--cart">
                         <span>520 ₽</span>

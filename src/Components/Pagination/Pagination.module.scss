@@ -1,0 +1,41 @@
+.root {
+    :global {
+        .previous {
+            background: #f0f8ff;
+        }
+    }
+
+    li {
+        display: inline-block;
+        a {
+            margin: 0 1ex;
+            display: inline-flex;
+            justify-content: center;
+            align-self: center;
+            line-height: 4ex;
+            width: 4ex;
+            height: 4ex;
+            border-radius: 5ex;
+            border: 1px solid rgba($color: #ffaaaa, $alpha: 1.0);
+    
+            &:hover {
+                background: #ffaaaa;
+                cursor: pointer;
+    
+                color: #f0f8ff;
+
+                
+            }
+        }
+
+    }
+
+    :global {
+        .selected {
+            a {
+                color: #f0f8ff;
+                background: #ffaaaa;
+            }
+        }
+    }
+}
