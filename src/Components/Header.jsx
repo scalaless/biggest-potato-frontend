@@ -3,7 +3,7 @@ import logo from '../assets/img/big-potato-logo.svg';
 import { Link } from 'react-router-dom';
 import SearchPotato from './SearchPotato';
 
-function Header({searchPotatoValue, setSearchPotatoValue}) {
+function Header() {
     return (
         <div className="header">
             <div className="container">
@@ -16,7 +16,7 @@ function Header({searchPotatoValue, setSearchPotatoValue}) {
                         </div>
                     </div>
                 </Link>
-                <SearchPotato searchPotatoValue={searchPotatoValue} setSearchPotatoValue={setSearchPotatoValue}/>
+                <SearchPotato />
                 <div className="header__cart">
                     <Link to="/cart" className="button button--cart">
                         <span>520 ₽</span>

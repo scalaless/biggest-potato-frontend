@@ -4,26 +4,35 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import EmptyCart from './pages/EmptyCart';
 import { Route, Routes } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+
+export const AppContext = createContext('');
 
 function App() {
-  const pathName = window.location.pathname;
-  const [searchPotatoValue, setSearchPotatoValue] = useState("")
+    const pathName = window.location.pathname;
+    const [searchPotatoValue, setSearchPotatoValue] = useState('');
 
-  return (
-    <div>
-      <div className="wrapper">
-        <Header searchPotatoValue={searchPotatoValue} setSearchPotatoValue={setSearchPotatoValue}/>
-        <Routes>
-          <Route path="" element={<Home searchPotatoValue={searchPotatoValue} />} />
-          <Route path="/cart" element={<Cart />} />
+    return (
+        <div>
+            <AppContext.Provider value={{searchPotatoValue, setSearchPotatoValue}}>
+                <div className="wrapper">
+                    <Header />
 
-          <Route path="*" element={<EmptyCart />} />
-        </Routes>
-        
-      </div>
-    </div>
-  );
+                    <Routes>
+                        <Route
+                            path=""
+                            element={
+                                <Home />
+                            }
+                        />
+                        <Route path="/cart" element={<Cart />} />
+
+                        <Route path="*" element={<EmptyCart />} />
+                    </Routes>
+                </div>
+            </AppContext.Provider>
+        </div>
+    );
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import '../scss/app.scss';
 import Categories from '../Components/Categories';
@@ -7,8 +7,11 @@ import axios from 'axios';
 import SortPlease from '../Components/SortPlease';
 import Sceleton from '../Components/PotatoBlock/Sceleton';
 import Pagination from '../Components/Pagination';
+import { AppContext } from '../App';
 
-const Home = ({ searchPotatoValue }) => {
+const Home = () => {
+    const {searchPotatoValue} = useContext(AppContext)
+
     const [isLoading, setIsCloading] = useState(true);
     const [potatoes, setPotatoes] = useState([]); // Инициализируем как массив
 
