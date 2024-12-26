@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import catRed from './slices/categorySlice'
+import filter from "./slices/filterSlice"
 
 export const store = configureStore({
-  reducer: { counter: catRed },
+  reducer: {
+    filter,
+  }
 })

@@ -8,14 +8,19 @@ import SortPlease from '../Components/SortPlease';
 import Sceleton from '../Components/PotatoBlock/Sceleton';
 import Pagination from '../Components/Pagination';
 import { AppContext } from '../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategory } from '../redux/slices/filterSlice';
 
 const Home = () => {
+    const dispatch = useDispatch()
+    const currentCategory = useSelector(s=>s.filter.category)
+
     const {searchPotatoValue} = useContext(AppContext)
 
     const [isLoading, setIsCloading] = useState(true);
-    const [potatoes, setPotatoes] = useState([]); // Инициализируем как массив
+    const [potatoes, setPotatoes] = useState([]);
 
-    const [currentCategory, setCurrentCategory] = useState({ id: 0, title: "Все категории" });
+    // const [currentCategory, setCurrentCategory] = useState({ id: "0", title: "Все категории" });
     const [selectedSort, setSelectedSort] = useState({ name: "популярности", v: "Rating" });
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,17 +33,22 @@ const Home = () => {
 
     const sceletons = [...new Array(12)].map((_, i) => <Sceleton key={i} />);
 
+    const changeCat = (cat) => {
+        console.log(cat)
+        dispatch(setCategory(cat))
+    }
+
     useEffect(() => {
         setIsCloading(true);
 
         const params = {};
-        if (currentCategory.id !== 0) params.category = currentCategory.id;
+        if (currentCategory.id !== "0") params.category = currentCategory.id;
         if (selectedSort.id !== 0) params.sort = selectedSort.v;
         params.page = currentPage;
 
         axios.get("http://95.142.35.105:54870/potatoes/list", { params })
             .then((response) => {
-                const { potatoes, totalPages } = response.data; // Извлекаем массив potatoes
+                const { potatoes, totalPages } = response.data;
                 if (Array.isArray(potatoes)) {
                     setPotatoes(potatoes);
                 } else {
@@ -56,7 +66,7 @@ const Home = () => {
     return (
         <>
             <div className="content__top">
-                <Categories value={currentCategory} changeCat={(i) => { setCurrentCategory(i) }} />
+                <Categories value={currentCategory} changeCat={ changeCat } />
                 <SortPlease value={selectedSort} onChangeSort={(i) => { setSelectedSort(i) }} />
             </div>
             <div className="content">

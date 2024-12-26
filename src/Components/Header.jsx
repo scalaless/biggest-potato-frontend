@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../assets/img/big-potato-logo.svg';
 import { Link } from 'react-router-dom';
 import SearchPotato from './SearchPotato';
+import MyFly from './MyFly';
 
 function Header() {
     return (
@@ -16,6 +17,7 @@ function Header() {
                         </div>
                     </div>
                 </Link>
+                <MyFly />
                 <SearchPotato />
                 <div className="header__cart">
                     <Link to="/cart" className="button button--cart">

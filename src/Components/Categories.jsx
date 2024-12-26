@@ -8,7 +8,7 @@ function Categories({ value, changeCat }) {
     // axios.get("http://localhost:548700/potatoes/list")
     axios.get("http://95.142.35.105:54870/categories/list")
       .then((response) => {
-        const defaultCategory = { id: 0, title: "Все категории" };
+        const defaultCategory = { id: "0", title: "Все категории" };
         setCategoriesList([defaultCategory, ...response.data]);
       })
       .catch((error) => {
