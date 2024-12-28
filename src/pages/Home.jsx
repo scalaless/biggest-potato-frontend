@@ -9,7 +9,7 @@ import Sceleton from '../Components/PotatoBlock/Sceleton';
 import Pagination from '../Components/Pagination';
 import { AppContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategory } from '../redux/slices/filterSlice';
+import { setCategory, setPageCount } from '../redux/slices/filterSlice';
 
 const Home = () => {
     const dispatch = useDispatch()
@@ -55,6 +55,7 @@ const Home = () => {
                 } else {
                     console.error("Expected an array, but got:", potatoes);
                 }
+                console.log(totalPages)
                 setPageCountForPagination(totalPages)
                 setIsCloading(false);
             })
