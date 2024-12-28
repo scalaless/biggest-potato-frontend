@@ -14,6 +14,7 @@ import { setCategory } from '../redux/slices/filterSlice';
 const Home = () => {
     const dispatch = useDispatch()
     const currentCategory = useSelector(s=>s.filter.category)
+    const sort = useSelector(s=>s.filter.sort)
 
     const {searchPotatoValue} = useContext(AppContext)
 
@@ -21,7 +22,7 @@ const Home = () => {
     const [potatoes, setPotatoes] = useState([]);
 
     // const [currentCategory, setCurrentCategory] = useState({ id: "0", title: "Все категории" });
-    const [selectedSort, setSelectedSort] = useState({ name: "популярности", v: "Rating" });
+    // const [selectedSort, setSelectedSort] = useState({ name: "популярности", v: "Rating" });
 
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -43,7 +44,7 @@ const Home = () => {
 
         const params = {};
         if (currentCategory.id !== "0") params.category = currentCategory.id;
-        if (selectedSort.id !== 0) params.sort = selectedSort.v;
+        if (sort.name !== 'популярности') params.sort = sort.v;
         params.page = currentPage;
 
         axios.get("http://95.142.35.105:54870/potatoes/list", { params })
@@ -61,13 +62,13 @@ const Home = () => {
                 console.error("There was an error fetching the potatoes!", error);
             });
         window.scrollTo(0, 0);
-    }, [currentCategory, selectedSort, currentPage]);
+    }, [currentCategory, currentPage, sort]);
 
     return (
         <>
             <div className="content__top">
                 <Categories value={currentCategory} changeCat={ changeCat } />
-                <SortPlease value={selectedSort} onChangeSort={(i) => { setSelectedSort(i) }} />
+                <SortPlease  />
             </div>
             <div className="content">
                 <div className="container">

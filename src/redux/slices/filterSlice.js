@@ -14,10 +14,13 @@ const filterSlice = createSlice({
         setCategory(s, a) {
             s.category = a.payload
         },
+        setSort(s,a) {
+            s.sort = a.payload
+        },
     },
 })
 
 //  actions === reducers
-export const { setCategory } = filterSlice.actions
+export const { setCategory, setSort } = filterSlice.actions
 
 export default filterSlice.reducer
