@@ -35,7 +35,6 @@ const Home = () => {
     const sceletons = [...new Array(12)].map((_, i) => <Sceleton key={i} />);
 
     const changeCat = (cat) => {
-        console.log(cat)
         dispatch(setCategory(cat))
     }
 
@@ -55,7 +54,6 @@ const Home = () => {
                 } else {
                     console.error("Expected an array, but got:", potatoes);
                 }
-                console.log(totalPages)
                 setPageCountForPagination(totalPages)
                 setIsCloading(false);
             })
