@@ -1,15 +1,27 @@
+import { useDispatch } from 'react-redux';
 import '../../scss/app.scss';
 import { useState } from 'react';
+import { pushProduct } from '../../redux/slices/cartSlice';
 
-const PotatoBlock = ({ title, price, img, sizes, types }) => {
+const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
+    const dispatch = useDispatch()
+
     const [activeType, setActiveType] = useState(0);
-
     const [currentSize, setCurrentSize] = useState(0);
-
     const [potatoCount, setPotatoCount] = useState(0);
 
     const onClockAdd = () => {
         setPotatoCount(potatoCount + 1);
+        
+        const item = {
+            id,
+            title,
+            price,
+            img,
+            type: activeType,
+            size: sizes[currentSize],
+        }
+        dispatch(pushProduct(item))
     };
 
     return (

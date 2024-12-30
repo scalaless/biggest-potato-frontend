@@ -3,8 +3,11 @@ import logo from '../assets/img/big-potato-logo.svg';
 import { Link } from 'react-router-dom';
 import SearchPotato from './SearchPotato';
 import MyFly from './MyFly';
+import { useSelector } from 'react-redux';
 
 function Header() {
+    const { products, totalPrice } = useSelector(s=>s.cart)
+
     return (
         <div className="header">
             <div className="container">
@@ -21,7 +24,7 @@ function Header() {
                 <SearchPotato />
                 <div className="header__cart">
                     <Link to="/cart" className="button button--cart">
-                        <span>520 ₽</span>
+                        <span>₽ {totalPrice}</span>
                         <div className="button__delimiter"></div>
                         <svg
                             width="18"
@@ -51,7 +54,7 @@ function Header() {
                                 strokeLinejoin="round"
                             />
                         </svg>
-                        <span>3</span>
+                        <span>{products.length}</span>
                     </Link>
                 </div>
             </div>
