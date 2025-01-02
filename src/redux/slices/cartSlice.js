@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import axios from "axios"
 
 const initialState = {
     products: [],
@@ -15,6 +16,7 @@ const cartSlice = createSlice({
         },
         removeProduct(s,a) {
             s.products = s.products.filter(obj=>obj.id !== a.payload)
+
         },
         clearProducts(s) {
             s.products = []

@@ -5,10 +5,14 @@ import Cart from './pages/Cart';
 import EmptyCart from './pages/EmptyCart';
 import { Route, Routes } from 'react-router-dom';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 export const AppContext = createContext('');
 
 function App() {
+    const dispatch = useDispatch();
+
     const pathName = window.location.pathname;
     const [searchPotatoValue, setSearchPotatoValue] = useState('');
 

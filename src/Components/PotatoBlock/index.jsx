@@ -1,10 +1,13 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import '../../scss/app.scss';
 import { useState } from 'react';
-import { pushProduct } from '../../redux/slices/cartSlice';
+import { initCart, pushProduct } from '../../redux/slices/cartSlice';
+import axios from 'axios';
 
 const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    const cartId = useSelector((s) => s.cart.cartId);
 
     const [activeType, setActiveType] = useState(0);
     const [currentSize, setCurrentSize] = useState(0);
@@ -12,7 +15,7 @@ const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
 
     const onClockAdd = () => {
         setPotatoCount(potatoCount + 1);
-        
+
         const item = {
             id,
             title,
@@ -20,8 +23,9 @@ const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
             img,
             type: activeType,
             size: sizes[currentSize],
-        }
-        dispatch(pushProduct(item))
+        };
+
+        dispatch(pushProduct(item));
     };
 
     return (

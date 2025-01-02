@@ -10,13 +10,14 @@ import Pagination from '../Components/Pagination';
 import { AppContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory, setPageCount } from '../redux/slices/filterSlice';
+import { initCart } from '../redux/slices/cartSlice';
 
 const Home = () => {
-    const dispatch = useDispatch()
-    const currentCategory = useSelector(s=>s.filter.category)
-    const sort = useSelector(s=>s.filter.sort)
+    const dispatch = useDispatch();
+    const currentCategory = useSelector((s) => s.filter.category);
+    const sort = useSelector((s) => s.filter.sort);
 
-    const {searchPotatoValue} = useContext(AppContext)
+    const { searchPotatoValue } = useContext(AppContext);
 
     const [isLoading, setIsCloading] = useState(true);
     const [potatoes, setPotatoes] = useState([]);
@@ -26,39 +27,45 @@ const Home = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [pageCountForPagination, setPageCountForPagination] = useState(0)
+    const [pageCountForPagination, setPageCountForPagination] = useState(0);
 
     const actualPotatoes = potatoes.filter((obj) => {
-        return obj.title.toLowerCase().includes(searchPotatoValue.toLowerCase());
+        return obj.title
+            .toLowerCase()
+            .includes(searchPotatoValue.toLowerCase());
     });
 
     const sceletons = [...new Array(12)].map((_, i) => <Sceleton key={i} />);
 
     const changeCat = (cat) => {
-        dispatch(setCategory(cat))
-    }
+        dispatch(setCategory(cat));
+    };
 
     useEffect(() => {
         setIsCloading(true);
 
         const params = {};
-        if (currentCategory.id !== "0") params.category = currentCategory.id;
+        if (currentCategory.id !== '0') params.category = currentCategory.id;
         if (sort.name !== 'популярности') params.sort = sort.v;
         params.page = currentPage;
 
-        axios.get("http://95.142.35.105:54870/potatoes/list", { params })
+        axios
+            .get('http://95.142.35.105:54870/potatoes/list', { params })
             .then((response) => {
                 const { potatoes, totalPages } = response.data;
                 if (Array.isArray(potatoes)) {
                     setPotatoes(potatoes);
                 } else {
-                    console.error("Expected an array, but got:", potatoes);
+                    console.error('Expected an array, but got:', potatoes);
                 }
-                setPageCountForPagination(totalPages)
+                setPageCountForPagination(totalPages);
                 setIsCloading(false);
             })
             .catch((error) => {
-                console.error("There was an error fetching the potatoes!", error);
+                console.error(
+                    'There was an error fetching the potatoes!',
+                    error,
+                );
             });
         window.scrollTo(0, 0);
     }, [currentCategory, currentPage, sort]);
@@ -66,22 +73,27 @@ const Home = () => {
     return (
         <>
             <div className="content__top">
-                <Categories value={currentCategory} changeCat={ changeCat } />
-                <SortPlease  />
+                <Categories value={currentCategory} changeCat={changeCat} />
+                <SortPlease />
             </div>
             <div className="content">
                 <div className="container">
                     <h2 className="content__title">Вся картошка</h2>
                     <div className="content__items">
-                        {
-                            isLoading ? sceletons : actualPotatoes.map((potato) => (<PotatoBlock key={potato.id} {...potato} />))
-                        }
+                        {isLoading
+                            ? sceletons
+                            : actualPotatoes.map((potato) => (
+                                  <PotatoBlock key={potato.id} {...potato} />
+                              ))}
                     </div>
-                    <Pagination count={pageCountForPagination} onChangePage={(number) => setCurrentPage(number)} />
+                    <Pagination
+                        count={pageCountForPagination}
+                        onChangePage={(number) => setCurrentPage(number)}
+                    />
                 </div>
             </div>
         </>
     );
-}
+};
 
 export default Home;
