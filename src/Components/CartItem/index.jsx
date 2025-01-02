@@ -1,6 +1,21 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
-const CartItem = ({ potatoId }) => {
+const CartItem = ({ productId }) => {
+    const [potato, setPotato] = useState()
+
+    useEffect(()=>{
+        axios.get(`http://95.142.35.105:54870/potatoes/${productId}`,{})
+        .then((r) => {
+            setPotato(r.data)            
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    },[])
+
+    console.log('potato', potato)
+
     return (
         <div className="cart__item">
             <div className="cart__item-img">
@@ -11,7 +26,7 @@ const CartItem = ({ potatoId }) => {
                 />
             </div>
             <div className="cart__item-info">
-                <h3>☺ {potatoId}</h3>
+                <h3>☺ {potato.id}</h3>
                 <p>тонкое тесто, 26 см.</p>
             </div>
             <div className="cart__item-count">

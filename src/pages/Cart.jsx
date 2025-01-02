@@ -11,18 +11,18 @@ export const Cart = () => {
     const params = {}
     params.id = currentCartId
 
-    var cartPositions = useState([])
+    var [cartPositions, setCartPositions] = useState([])
 
     useEffect(()=>{
         axios.get("http://95.142.35.105:54870/cart/get", { params })
         .then((r)=>{
-            cartPositions = r.data.positions
-            console.log(cartPositions)
+            setCartPositions(r.data.positions)
         })
         .catch((err)=>{
             console.error(err)
         })
         
+        console.log(cartPositions)
     }, [])
 
     return (
