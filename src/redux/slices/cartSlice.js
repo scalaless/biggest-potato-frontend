@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
 const initialState = {
+    cartId: "",
     products: [],
     totalPrice: 0,
 }
@@ -10,6 +11,9 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
+        initCart(s, a) {
+            s.cartId = a.payload
+        },
         pushProduct(s, a) {
             s.products.push(a.payload)
             s.totalPrice += a.payload.price
@@ -25,6 +29,6 @@ const cartSlice = createSlice({
 })
 
 //  actions === reducers
-export const { pushProduct, removeProduct, clearProducts } = cartSlice.actions
+export const { initCart, pushProduct, removeProduct, clearProducts } = cartSlice.actions
 
 export default cartSlice.reducer

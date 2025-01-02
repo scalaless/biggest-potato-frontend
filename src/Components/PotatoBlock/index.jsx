@@ -7,7 +7,7 @@ import axios from 'axios';
 const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
     const dispatch = useDispatch();
 
-    const cartId = useSelector((s) => s.cart.cartId);
+    const localCartId = useSelector((s) => s.cart.cartId);
 
     const [activeType, setActiveType] = useState(0);
     const [currentSize, setCurrentSize] = useState(0);
@@ -21,12 +21,37 @@ const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
             title,
             price,
             img,
-            type: activeType,
+            type: types[activeType],
             size: sizes[currentSize],
         };
 
-        dispatch(pushProduct(item));
-    };
+        async function addToCart(cartId, product) {
+            try {
+                const requestBody = {
+                    position: {
+                        potatoId: product.id,
+                        typeId: product.type.id,
+                        sizeId: product.size.id,
+                    },
+                };
+
+                // Отправляем POST-запрос на сервер
+                const response = await axios.post(
+                    `http://localhost:54870/cart/push?id=${cartId}`,
+                    requestBody,
+                );
+
+                dispatch(pushProduct(item));
+                console.log('Product added to cart:', response.data);
+            } catch (error) {
+                console.error('Error adding product to cart:', error);
+            }
+        }
+
+        
+        // Вызов функции addToCart
+        addToCart(localCartId, item);
+    }
 
     return (
         <div className="potato-block">

@@ -17,6 +17,24 @@ const Home = () => {
     const currentCategory = useSelector((s) => s.filter.category);
     const sort = useSelector((s) => s.filter.sort);
 
+    async function fetchCartId() {
+        try {
+            const response = await axios.post(
+                'http://localhost:54870/cart/init',
+                {},
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                },
+            );
+
+            dispatch(initCart(response.data.id))
+        } catch (error) {
+            console.error('Error initializing cart:', error);
+        }
+    }
+
     const { searchPotatoValue } = useContext(AppContext);
 
     const [isLoading, setIsCloading] = useState(true);
@@ -43,6 +61,7 @@ const Home = () => {
 
     useEffect(() => {
         setIsCloading(true);
+        fetchCartId()
 
         const params = {};
         if (currentCategory.id !== '0') params.category = currentCategory.id;
