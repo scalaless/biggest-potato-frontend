@@ -16,11 +16,12 @@ const Home = () => {
     const dispatch = useDispatch();
     const currentCategory = useSelector((s) => s.filter.category);
     const sort = useSelector((s) => s.filter.sort);
+    const { cartId } = useSelector(s=>s.cart)
 
     async function fetchCartId() {
         try {
             const response = await axios.post(
-                'http://localhost:54870/cart/init',
+                'http://95.142.35.105:54870/cart/init',
                 {},
                 {
                     headers: {
@@ -61,7 +62,7 @@ const Home = () => {
 
     useEffect(() => {
         setIsCloading(true);
-        fetchCartId()
+        if(cartId === "") fetchCartId()
 
         const params = {};
         if (currentCategory.id !== '0') params.category = currentCategory.id;

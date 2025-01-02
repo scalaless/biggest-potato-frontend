@@ -37,7 +37,7 @@ const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
 
                 // Отправляем POST-запрос на сервер
                 const response = await axios.post(
-                    `http://localhost:54870/cart/push?id=${cartId}`,
+                    `http://95.142.35.105:54870/cart/push?id=${cartId}`,
                     requestBody,
                 );
 
