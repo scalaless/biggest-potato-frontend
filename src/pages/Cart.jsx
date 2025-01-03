@@ -1,28 +1,52 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItem from '../Components/CartItem';
+import { clearProducts, initCart } from '../redux/slices/cartSlice';
 
 export const Cart = () => {
-    const currentCartId = useSelector(x=>x.cart.cartId)
-    const { products, totalPrice } = useSelector(s=>s.cart)
+    const dispatch = useDispatch()
+    const currentCartId = useSelector((x) => x.cart.cartId);
+    const { products, totalPrice } = useSelector((s) => s.cart);
 
-    const params = {}
-    params.id = currentCartId
+    const params = {};
+    params.id = currentCartId;
 
-    var [cartPositions, setCartPositions] = useState([])
+    var [cartPositions, setCartPositions] = useState([]);
 
-    useEffect(()=>{
-        axios.get("http://95.142.35.105:54870/cart/get", { params })
-        .then((r)=>{
-            setCartPositions(r.data.positions)
-        })
-        .catch((err)=>{
-            console.error(err)
-        })
-        
-    }, [products, totalPrice])
+    useEffect(() => {
+        axios
+            .get('http://95.142.35.105:54870/cart/get', { params })
+            .then((r) => {
+                setCartPositions(r.data.positions);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [products, totalPrice]);
+
+    const onClearCart = async () => {
+        async function fetchCartId() {
+            try {
+                const response = await axios.post(
+                    'http://95.142.35.105:54870/cart/init',
+                    {},
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    },
+                );
+
+                dispatch(initCart(response.data.id));
+            } catch (error) {
+                console.error('Error initializing cart:', error);
+            }
+        }
+        await fetchCartId()
+        dispatch(clearProducts())
+    };
 
     return (
         <div className="container container--cart">
@@ -59,7 +83,7 @@ export const Cart = () => {
                         </svg>
                         Корзина
                     </h2>
-                    <div className="cart__clear">
+                    <div onClick={() => {onClearCart()}} className="cart__clear">
                         <svg
                             width="20"
                             height="20"
@@ -172,9 +196,9 @@ export const Cart = () => {
                             </div>
                         </div>
                     </div> */}
-                    {
-                        cartPositions.map((x, i) => (<CartItem key={i} position={x}/>) )
-                    }
+                    {cartPositions.map((x, i) => (
+                        <CartItem key={i} position={x} />
+                    ))}
 
                     {/*
                         {types.map((v, i) => (
@@ -186,7 +210,6 @@ export const Cart = () => {
                             </li>
                         ))}
                     */}
-                    
                 </div>
                 <div className="cart__bottom">
                     <div className="cart__bottom-details">
@@ -200,7 +223,9 @@ export const Cart = () => {
                         </span>
                     </div>
                     <div className="cart__bottom-buttons">
-                        <Link to="/" className="button button--outline button--add go-back-btn">
+                        <Link
+                            to="/"
+                            className="button button--outline button--add go-back-btn">
                             <svg
                                 width="8"
                                 height="14"

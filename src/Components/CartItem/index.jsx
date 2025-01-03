@@ -58,8 +58,6 @@ const CartItem = ({ position }) => {
         
         await removeFromCart(cartId, position.ID);
 
-        console.log(potato.price)
-
         dispatch(removeProduct(position.potatoId, potato.price))
     }
 
