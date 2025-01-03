@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItem from '../Components/CartItem';
 import { clearProducts, initCart } from '../redux/slices/cartSlice';
+import CartEmpty from './CartEmpty';
 
 export const Cart = () => {
     const dispatch = useDispatch()
@@ -49,7 +50,10 @@ export const Cart = () => {
     };
 
     return (
-        <div className="container container--cart">
+        products.length === 0 ? (
+            <CartEmpty />
+        ) : (
+            <div className="container container--cart">
             <div className="cart">
                 <div className="cart__top">
                     <h2 className="content__title">
@@ -249,8 +253,9 @@ export const Cart = () => {
                     </div>
                 </div>
             </div>
-        </div>
-    );
+            </div>
+        )
+    )
 };
 
 export default Cart;
