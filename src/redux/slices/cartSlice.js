@@ -19,8 +19,11 @@ const cartSlice = createSlice({
             s.totalPrice += a.payload.price
         },
         removeProduct(s,a) {
-            s.products = s.products.filter(obj=>obj.id !== a.payload)
-
+            const productToRemove = s.products.find(obj => obj.id === a.payload);
+            if (productToRemove) {
+                s.products = s.products.filter(obj => obj.id !== a.payload);
+                s.totalPrice -= productToRemove.price;
+            }
         },
         clearProducts(s) {
             s.products = []

@@ -21,8 +21,8 @@ const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
             title,
             price,
             img,
-            type: types[activeType],
-            size: sizes[currentSize],
+            typeId: types[activeType].id,
+            sizeId: sizes[currentSize].id,
         };
 
         async function addToCart(cartId, product) {
@@ -30,8 +30,8 @@ const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
                 const requestBody = {
                     position: {
                         potatoId: product.id,
-                        typeId: product.type.id,
-                        sizeId: product.size.id,
+                        typeId: product.typeId,
+                        sizeId: product.sizeId,
                     },
                 };
 
@@ -42,7 +42,6 @@ const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
                 );
 
                 dispatch(pushProduct(item));
-                console.log('Product added to cart:', response.data);
             } catch (error) {
                 console.error('Error adding product to cart:', error);
             }

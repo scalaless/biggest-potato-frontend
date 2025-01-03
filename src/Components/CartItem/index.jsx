@@ -1,35 +1,82 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeProduct } from '../../redux/slices/cartSlice';
 
-const CartItem = ({ productId }) => {
-    const [potato, setPotato] = useState()
+const CartItem = ({ position }) => {
+    const { cartId } = useSelector(s=>s.cart)
+    const dispatch = useDispatch()
+
+    const [potato, setPotato] = useState({})
+    const [size, setSize] = useState("")
+    const [type, setType] = useState("")
 
     useEffect(()=>{
-        axios.get(`http://95.142.35.105:54870/potatoes/${productId}`,{})
+        axios.get(`http://95.142.35.105:54870/potatoes?id=${position.potatoId}`,{})
         .then((r) => {
-            setPotato(r.data)            
+            const { title, img, price, } = r.data
+            setPotato({ title, img, price, })
+
+            axios.get("http://95.142.35.105:54870/sizes/list", {})
+            .then((r)=>{
+                setSize(r.data.filter(x=>x.id === position.sizeId)[0].name)
+            })
+            .catch((err)=> {
+                console.error(err)
+            })
+
+            axios.get("http://95.142.35.105:54870/types/list", {})
+            .then((r)=>{
+                setType(r.data.filter(x=>x.id === position.typeId)[0].name)
+            })
+            .catch((err)=> {
+                console.error(err)
+            })
         })
         .catch((err) => {
             console.error(err)
         })
     },[])
 
-    console.log('potato', potato)
+    const onRemoveItem = async () => {
+        const removeFromCart = async (cartId, positionId) => {
+            try {
+                const requestBody = {
+                    id: positionId,
+                };
+        
+                const response = await axios.delete(`http://95.142.35.105:54870/cart/removeFrom`, {
+                    params: {
+                        id: cartId,
+                    },
+                    data: requestBody,
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        
+        await removeFromCart(cartId, position.ID);
+
+        console.log(potato.price)
+
+        dispatch(removeProduct(position.potatoId, potato.price))
+    }
 
     return (
         <div className="cart__item">
             <div className="cart__item-img">
                 <img
                     className="pizza-block__image"
-                    src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                    src={potato.img}
                     alt="Pizza"
                 />
             </div>
             <div className="cart__item-info">
-                <h3>☺ {potato.id}</h3>
-                <p>тонкое тесто, 26 см.</p>
+                <h3>{potato.title}</h3>
+                <p>{type} ({size})</p>   
             </div>
-            <div className="cart__item-count">
+            {/* <div className="cart__item-count">
                 <div className="button button--outline button--circle cart__item-count-minus">
                     <svg
                         width="10"
@@ -65,11 +112,11 @@ const CartItem = ({ productId }) => {
                         />
                     </svg>
                 </div>
-            </div>
+            </div> */}
             <div className="cart__item-price">
-                <b>770 ₽</b>
+                <b>{potato.price} ₽</b>
             </div>
-            <div className="cart__item-remove">
+            <div onClick={() => {onRemoveItem()}} className="cart__item-remove">
                 <div className="button button--outline button--circle">
                     <svg
                         width="10"

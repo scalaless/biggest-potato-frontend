@@ -22,8 +22,7 @@ export const Cart = () => {
             console.error(err)
         })
         
-        console.log(cartPositions)
-    }, [])
+    }, [products, totalPrice])
 
     return (
         <div className="container container--cart">
@@ -174,7 +173,7 @@ export const Cart = () => {
                         </div>
                     </div> */}
                     {
-                        cartPositions.map((x, i) => (<CartItem key={i} productId={x.potatoId}/>) )
+                        cartPositions.map((x, i) => (<CartItem key={i} position={x}/>) )
                     }
 
                     {/*
