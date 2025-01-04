@@ -60,19 +60,15 @@ const Home = () => {
         dispatch(setCategory(cat));
     };
 
-    useEffect(() => {
-        setIsCloading(true);
-        if(cartId === "") fetchCartId()
+    const fetchPotatoes = async () => {
+        try {
+            const params = {};
+            if (currentCategory.id !== '0') params.category = currentCategory.id;
+            if (sort.name !== 'популярности') params.sort = sort.v;
+            params.page = currentPage;
 
-        const params = {};
-        if (currentCategory.id !== '0') params.category = currentCategory.id;
-        if (sort.name !== 'популярности') params.sort = sort.v;
-        params.page = currentPage;
-
-        axios
-            .get('http://95.142.35.105:54870/potatoes/list', { params })
-            .then((response) => {
-                const { potatoes, totalPages } = response.data;
+            const resp = await axios.get('http://95.142.35.105:54870/potatoes/list', { params })
+            const { potatoes, totalPages } = resp.data;
                 if (Array.isArray(potatoes)) {
                     setPotatoes(potatoes);
                 } else {
@@ -80,13 +76,20 @@ const Home = () => {
                 }
                 setPageCountForPagination(totalPages);
                 setIsCloading(false);
-            })
-            .catch((error) => {
-                console.error(
-                    'There was an error fetching the potatoes!',
-                    error,
-                );
-            });
+        } catch (error) {
+            console.error(
+                'There was an error fetching the potatoes!',
+                error,
+            );
+        }
+    }
+
+    useEffect(() => {
+        setIsCloading(true);
+        if(cartId === "") fetchCartId()
+
+        fetchPotatoes()
+
         window.scrollTo(0, 0);
     }, [currentCategory, currentPage, sort]);
 

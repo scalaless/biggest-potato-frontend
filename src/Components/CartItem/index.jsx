@@ -11,31 +11,42 @@ const CartItem = ({ position }) => {
     const [size, setSize] = useState("")
     const [type, setType] = useState("")
 
-    useEffect(()=>{
-        axios.get(`http://95.142.35.105:54870/potatoes?id=${position.potatoId}`,{})
-        .then((r) => {
-            const { title, img, price, } = r.data
-            setPotato({ title, img, price, })
-
-            axios.get("http://95.142.35.105:54870/sizes/list", {})
-            .then((r)=>{
-                setSize(r.data.filter(x=>x.id === position.sizeId)[0].name)
-            })
-            .catch((err)=> {
-                console.error(err)
-            })
-
-            axios.get("http://95.142.35.105:54870/types/list", {})
-            .then((r)=>{
-                setType(r.data.filter(x=>x.id === position.typeId)[0].name)
-            })
-            .catch((err)=> {
-                console.error(err)
-            })
-        })
-        .catch((err) => {
+    const fetchSizes = async () => {
+        try {
+            const resp = await axios.get("http://95.142.35.105:54870/sizes/list", {})
+            setSize(resp.data.filter(x=>x.id === position.sizeId)[0].name)
+        } catch (err) {
             console.error(err)
-        })
+            
+        }
+    }
+
+    const fetchTypes = async () => {
+        try {
+            const resp = await axios.get("http://95.142.35.105:54870/types/list", {})
+            setType(resp.data.filter(x=>x.id === position.typeId)[0].name)
+        } catch (err) {
+            console.error(err)
+            
+        }
+    }
+
+    const fetchPotato = async () => {
+        try {
+            const resp = await axios.get(`http://95.142.35.105:54870/potatoes?id=${position.potatoId}`,{})
+                const { title, img, price, } = resp.data
+                setPotato({ title, img, price, })
+    
+                fetchSizes()
+                fetchTypes()
+        } catch (err) {
+            console.error(err)
+            
+        }
+    }
+
+    useEffect(()=>{
+        fetchPotato()
     },[])
 
     const onRemoveItem = async () => {
