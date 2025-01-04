@@ -28,7 +28,7 @@ const cartSlice = createSlice({
         clearProducts(s) {
             s.products = []
             s.totalPrice = 0
-        }
+        },
     },
 })
 

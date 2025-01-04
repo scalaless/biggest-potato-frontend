@@ -18,6 +18,20 @@ body {
 .content {
   padding: 40px 0;
 
+  &__error-info {
+    margin: 10ex auto;
+    width: 55ex;
+    text-align: center;
+
+    h2 {
+      font-size: 30px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 20;
+    }
+  }
+
   &__title {
     margin: 35px 0;
   }
