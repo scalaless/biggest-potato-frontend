@@ -10,14 +10,14 @@ import Pagination from '../Components/Pagination';
 import { AppContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory, setPageCount } from '../redux/slices/filterSlice';
-import { initCart } from '../redux/slices/cartSlice';
+import { initCart, selectCart } from '../redux/slices/cartSlice';
 import { setItems, fetchPotatoList } from '../redux/slices/potatoListSlice';
 
 const Home = () => {
     const dispatch = useDispatch();
     const currentCategory = useSelector((s) => s.filter.category);
-    const sort = useSelector((s) => s.filter.sort);
-    const { cartId } = useSelector((s) => s.cart);
+    const { sort } = useSelector((s) => s.filter);
+    const { cartId } = useSelector(selectCart);
 
     const { items, totalPages, loadingStatus } = useSelector(
         (s) => s.potatoList,

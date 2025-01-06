@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import '../../scss/app.scss';
 import { useState } from 'react';
-import { initCart, pushProduct } from '../../redux/slices/cartSlice';
+import { initCart, pushProduct, selectCart } from '../../redux/slices/cartSlice';
 import axios from 'axios';
 
 const PotatoBlock = ({ id, title, price, img, sizes, types }) => {
     const dispatch = useDispatch();
 
-    const localCartId = useSelector((s) => s.cart.cartId);
+    const { cartId } = useSelector(selectCart);
+    const localCartId = cartId
 
     const [activeType, setActiveType] = useState(0);
     const [currentSize, setCurrentSize] = useState(0);

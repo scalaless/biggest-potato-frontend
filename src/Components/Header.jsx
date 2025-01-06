@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import SearchPotato from './SearchPotato';
 import MyFly from './MyFly';
 import { useSelector } from 'react-redux';
+import { selectCart } from '../redux/slices/cartSlice';
 
 function Header() {
-    const { products, totalPrice } = useSelector(s=>s.cart)
+    const { products, totalPrice } = useSelector(selectCart)
 
     return (
         <div className="header">

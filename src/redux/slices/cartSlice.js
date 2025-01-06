@@ -32,6 +32,8 @@ const cartSlice = createSlice({
     },
 })
 
+export const selectCart = (s) => s.cart
+
 //  actions === reducers
 export const { initCart, pushProduct, removeProduct, clearProducts } = cartSlice.actions
 

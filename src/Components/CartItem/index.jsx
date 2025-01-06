@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeProduct } from '../../redux/slices/cartSlice';
+import { removeProduct, selectCart } from '../../redux/slices/cartSlice';
 
 const CartItem = ({ position }) => {
-    const { cartId } = useSelector(s=>s.cart)
+    const { cartId } = useSelector(selectCart)
     const dispatch = useDispatch()
 
     const [potato, setPotato] = useState({})
